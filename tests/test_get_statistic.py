@@ -10,7 +10,7 @@ class TestGetStatistic:
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_get_statistic_success(self, api_client, created_item):
-        """TC-026: Успешное получение статистики существующего объявления"""
+        """TEST-026: Успешное получение статистики существующего объявления"""
         item_id = created_item["id"]
 
         response = api_client.get_statistic(item_id, version=1)
@@ -25,7 +25,7 @@ class TestGetStatistic:
 
     @pytest.mark.negative
     def test_get_statistic_nonexistent_item(self, api_client):
-        """TC-027: Получение статистики несуществующего объявления"""
+        """TEST-027: Получение статистики несуществующего объявления"""
         fake_uuid = str(uuid.uuid4())
 
         response = api_client.get_statistic(fake_uuid, version=1)
@@ -35,7 +35,7 @@ class TestGetStatistic:
 
     @pytest.mark.negative
     def test_get_statistic_invalid_id_v1(self, api_client):
-        """TC-028: Получение статистики с невалидным ID (API v1)"""
+        """TEST-028: Получение статистики с невалидным ID (API v1)"""
         response = api_client.get_statistic("invalid-id", version=1)
 
         assert response.status_code == 400, \
@@ -43,7 +43,7 @@ class TestGetStatistic:
 
     @pytest.mark.negative
     def test_get_statistic_invalid_id_v2(self, api_client):
-        """TC-028b: Получение статистики с невалидным ID (API v2)"""
+        """TEST-028b: Получение статистики с невалидным ID (API v2)"""
         response = api_client.get_statistic("invalid-id", version=2)
 
         assert response.status_code == 404, \
@@ -51,7 +51,7 @@ class TestGetStatistic:
 
     @pytest.mark.positive
     def test_get_statistic_initial_values(self, api_client, new_seller_id):
-        """TC-029: Проверка значений статистики"""
+        """TEST-029: Проверка значений статистики"""
         create_data = {
             "sellerID": new_seller_id,
             "name": "Объявление со статистикой",
@@ -82,7 +82,7 @@ class TestGetStatistic:
 
     @pytest.mark.positive
     def test_get_statistic_api_v2(self, api_client, created_item):
-        """TC-030: Получение статистики через API v2"""
+        """TEST-030: Получение статистики через API v2"""
         item_id = created_item["id"]
 
         response = api_client.get_statistic(item_id, version=2)

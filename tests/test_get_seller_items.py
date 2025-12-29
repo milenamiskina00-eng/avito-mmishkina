@@ -10,7 +10,7 @@ class TestGetSellerItems:
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_get_seller_items_success(self, api_client, new_seller_id):
-        """TC-020: Успешное получение объявлений существующего продавца"""
+        """TEST-020: Успешное получение объявлений существующего продавца"""
         created_items = []
         for i in range(3):
             data = {
@@ -18,9 +18,9 @@ class TestGetSellerItems:
                 "name": f"Объявление продавца {i}",
                 "price": 1000 * (i + 1),
                 "statistics": {
-                    "likes": 0,
-                    "viewCount": 0,
-                    "contacts": 0
+                    "likes": 1,
+                    "viewCount": 1,
+                    "contacts": 1
                 }
             }
             response = api_client.create_item(data)
@@ -44,7 +44,7 @@ class TestGetSellerItems:
 
     @pytest.mark.positive
     def test_get_seller_items_empty_list(self, api_client):
-        """TC-021: Получение объявлений продавца без объявлений"""
+        """TEST-021: Получение объявлений продавца без объявлений"""
         unique_seller_id = random.randint(111111, 999999)
 
         response = api_client.get_seller_items(unique_seller_id)
@@ -57,7 +57,7 @@ class TestGetSellerItems:
 
     @pytest.mark.negative
     def test_get_seller_items_invalid_seller_id_string(self, api_client):
-        """TC-022: Получение объявлений с невалидным sellerID (строка)"""
+        """TEST-022: Получение объявлений с невалидным sellerID (строка)"""
         response = api_client.get_seller_items("abc")
 
         assert response.status_code == 400, \
@@ -65,7 +65,7 @@ class TestGetSellerItems:
 
     @pytest.mark.negative
     def test_get_seller_items_negative_seller_id(self, api_client):
-        """TC-023: Получение объявлений с отрицательным sellerID"""
+        """TEST-023: Получение объявлений с отрицательным sellerID"""
         response = api_client.get_seller_items(-1)
 
         assert response.status_code == 400, \
@@ -73,7 +73,7 @@ class TestGetSellerItems:
 
     @pytest.mark.negative
     def test_get_seller_items_zero_seller_id(self, api_client):
-        """TC-024: Получение объявлений с sellerID = 0"""
+        """TEST-024: Получение объявлений с sellerID = 0"""
         response = api_client.get_seller_items(0)
 
         assert response.status_code == 400, \
@@ -81,7 +81,7 @@ class TestGetSellerItems:
 
     @pytest.mark.integration
     def test_get_only_specific_seller_items(self, api_client):
-        """TC-025: Проверка что возвращаются только объявления указанного продавца"""
+        """TEST-025: Проверка что возвращаются только объявления указанного продавца"""
         seller_id_1 = random.randint(111111, 555555)
         seller_id_2 = random.randint(555556, 999999)
 
@@ -90,7 +90,7 @@ class TestGetSellerItems:
                 "sellerID": seller_id_1,
                 "name": f"Seller 1 Item {i}",
                 "price": 1000,
-                "statistics": {"likes": 0, "viewCount": 0, "contacts": 0}
+                "statistics": {"likes": 1, "viewCount": 1, "contacts": 1}
             }
             api_client.create_item(data)
 
@@ -99,7 +99,7 @@ class TestGetSellerItems:
                 "sellerID": seller_id_2,
                 "name": f"Seller 2 Item {i}",
                 "price": 2000,
-                "statistics": {"likes": 0, "viewCount": 0, "contacts": 0}
+                "statistics": {"likes": 1, "viewCount": 1, "contacts": 1}
             }
             api_client.create_item(data)
 

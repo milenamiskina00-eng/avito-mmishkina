@@ -10,7 +10,7 @@ class TestGetItem:
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_get_existing_item(self, api_client, created_item):
-        """TC-015: Успешное получение существующего объявления"""
+        """TEST-015: Успешное получение существующего объявления"""
         item_id = created_item["id"]
 
         response = api_client.get_item(item_id)
@@ -40,7 +40,7 @@ class TestGetItem:
 
     @pytest.mark.negative
     def test_get_nonexistent_item(self, api_client):
-        """TC-016: Получение несуществующего объявления"""
+        """TEST-016: Получение несуществующего объявления"""
         fake_uuid = str(uuid.uuid4())
 
         response = api_client.get_item(fake_uuid)
@@ -50,7 +50,7 @@ class TestGetItem:
 
     @pytest.mark.negative
     def test_get_item_with_invalid_id_format(self, api_client):
-        """TC-017: Получение объявления с невалидным форматом ID"""
+        """TEST-017: Получение объявления с невалидным форматом ID"""
         response = api_client.get_item("invalid-id-format")
 
         # Согласно swagger может быть 400 или 404
@@ -59,7 +59,7 @@ class TestGetItem:
 
     @pytest.mark.negative
     def test_get_item_with_special_characters(self, api_client):
-        """TC-019: Получение объявления с ID содержащим спецсимволы"""
+        """TEST-019: Получение объявления с ID содержащим спецсимволы"""
         response = api_client.get_item("!@#$%^&*()")
 
         assert response.status_code in [400, 404], \
@@ -67,7 +67,7 @@ class TestGetItem:
 
     @pytest.mark.integration
     def test_get_item_matches_created_data(self, api_client, new_seller_id):
-        """TC-031: Создание и последующее получение объявления"""
+        """TEST-031: Создание и последующее получение объявления"""
         create_data = {
             "sellerID": new_seller_id,
             "name": "Проверка соответствия данных",
@@ -121,7 +121,7 @@ class TestGetItem:
 
     @pytest.mark.negative
     def test_get_item_empty_id(self, base_url):
-        """TC-018: Получение объявления с пустым ID"""
+        """TEST-018: Получение объявления с пустым ID"""
         import requests
 
         response = requests.get(

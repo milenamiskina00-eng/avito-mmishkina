@@ -11,7 +11,7 @@ class TestCreateItem:
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_create_item_success(self, api_client, new_seller_id):
-        """TC-001: Успешное создание объявления с валидными данными"""
+        """TEST-001: Успешное создание объявления с валидными данными"""
         data = {
             "sellerID": new_seller_id,
             "name": "Тестовое объявление",
@@ -39,7 +39,7 @@ class TestCreateItem:
     @pytest.mark.negative
     def test_create_item_without_statistics(self, api_client, new_seller_id):
         """
-        TC-002: Создание объявления без поля statistics
+        TEST-002: Создание объявления без поля statistics
         """
         data = {
             "sellerID": new_seller_id,
@@ -54,15 +54,15 @@ class TestCreateItem:
 
     @pytest.mark.positive
     def test_create_item_with_zero_price(self, api_client, new_seller_id):
-        """TC-003: Создание объявления с минимальной ценой (0)"""
+        """TEST-003: Создание объявления с минимальной ценой (0)"""
         data = {
             "sellerID": new_seller_id,
             "name": "Бесплатное объявление",
             "price": 0,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -74,15 +74,15 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_negative_price(self, api_client, new_seller_id):
-        """TC-004: Создание объявления с отрицательной ценой"""
+        """TEST-004: Создание объявления с отрицательной ценой"""
         data = {
             "sellerID": new_seller_id,
             "name": "Объявление с отрицательной ценой",
             "price": -100,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -93,14 +93,14 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_without_seller_id(self, api_client):
-        """TC-005: Создание объявления без обязательного поля sellerID"""
+        """TEST-005: Создание объявления без обязательного поля sellerID"""
         data = {
             "name": "Объявление без sellerID",
             "price": 1000,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -110,14 +110,14 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_without_name(self, api_client, new_seller_id):
-        """TC-006: Создание объявления без обязательного поля name"""
+        """TEST-006: Создание объявления без обязательного поля name"""
         data = {
             "sellerID": new_seller_id,
             "price": 1000,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -127,14 +127,14 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_without_price(self, api_client, new_seller_id):
-        """TC-007: Создание объявления без обязательного поля price"""
+        """TEST-007: Создание объявления без обязательного поля price"""
         data = {
             "sellerID": new_seller_id,
             "name": "Объявление без цены",
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -144,7 +144,7 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_empty_body(self, api_client):
-        """TC-008: Создание объявления с пустым телом запроса"""
+        """TEST-008: Создание объявления с пустым телом запроса"""
         response = api_client.create_item({})
 
         assert response.status_code == 400, \
@@ -152,7 +152,7 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_invalid_json(self, base_url):
-        """TC-009: Создание объявления с невалидным JSON"""
+        """TEST-009: Создание объявления с невалидным JSON"""
         response = requests.post(
             f"{base_url}/api/1/item",
             data="invalid json {",
@@ -164,15 +164,15 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_empty_name(self, api_client, new_seller_id):
-        """TC-012: Создание объявления с пустым именем"""
+        """TEST-012: Создание объявления с пустым именем"""
         data = {
             "sellerID": new_seller_id,
             "name": "",
             "price": 1000,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -183,15 +183,15 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_string_seller_id(self, api_client):
-        """TC-013: Создание объявления с sellerID строкового типа"""
+        """TEST-013: Создание объявления с sellerID строкового типа"""
         data = {
             "sellerID": "abc",
             "name": "Тестовое объявление",
             "price": 1000,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -202,15 +202,15 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_string_price(self, api_client, new_seller_id):
-        """TC-014: Создание объявления с price строкового типа"""
+        """TEST-014: Создание объявления с price строкового типа"""
         data = {
             "sellerID": new_seller_id,
             "name": "Тестовое объявление",
-            "price": "сто рублей",
+            "price": "123",
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -221,15 +221,15 @@ class TestCreateItem:
 
     @pytest.mark.positive
     def test_create_item_with_long_name(self, api_client, new_seller_id):
-        """TC-011: Создание объявления с очень длинным именем"""
+        """TEST-011: Создание объявления с очень длинным именем"""
         data = {
             "sellerID": new_seller_id,
             "name": "A" * 1000,
             "price": 1000,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -240,15 +240,15 @@ class TestCreateItem:
 
     @pytest.mark.positive
     def test_create_item_with_special_characters_in_name(self, api_client, new_seller_id):
-        """TC-038: SQL-инъекция в поле name (проверка безопасности)"""
+        """TEST-038: SQL-инъекция в поле name (проверка безопасности)"""
         data = {
             "sellerID": new_seller_id,
             "name": "'; DROP TABLE items;--",
             "price": 1000,
             "statistics": {
-                "likes": 0,
-                "viewCount": 0,
-                "contacts": 0
+                "likes": 1,
+                "viewCount": 1,
+                "contacts": 1
             }
         }
 
@@ -259,7 +259,7 @@ class TestCreateItem:
 
     @pytest.mark.integration
     def test_create_multiple_items_unique_ids(self, api_client, new_seller_id):
-        """TC-033: Проверка уникальности ID объявлений"""
+        """TEST-033: Проверка уникальности ID объявлений"""
         ids = set()
 
         for i in range(3):
@@ -268,9 +268,9 @@ class TestCreateItem:
                 "name": f"Test Item {i}",
                 "price": 1000 + i,
                 "statistics": {
-                    "likes": 0,
-                    "viewCount": 0,
-                    "contacts": 0
+                    "likes": 1,
+                    "viewCount": 1,
+                    "contacts": 1
                 }
             }
             response = api_client.create_item(data)
@@ -284,7 +284,7 @@ class TestCreateItem:
 
     @pytest.mark.negative
     def test_create_item_with_incomplete_statistics(self, api_client, new_seller_id):
-        """TC-034: Создание объявления с неполной статистикой"""
+        """TEST-034: Создание объявления с неполной статистикой"""
         data = {
             "sellerID": new_seller_id,
             "name": "Объявление с неполной статистикой",
